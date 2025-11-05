@@ -171,7 +171,7 @@ For further customization or troubleshooting, refer to comments within each scri
 
 ## Dataset Contents
 
-![dataset](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/Flow.png)
+![dataset](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/dataset.png)
 We release a sampled subset (16,500 annotated frames) captured with Ray-Ban Meta-style glasses. The dataset includes:
 
 
@@ -234,5 +234,6 @@ The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation frame
    ```bash
 
    jupyter notebook SITARA_eval.ipynb
+
 
 

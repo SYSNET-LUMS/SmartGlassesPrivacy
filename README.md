@@ -18,7 +18,7 @@ This repository contains the reference implementation of Consent-Driven Privacy 
 ## Architecture 
 The repository contains code and assets mapped to the paper’s three tiers:
 
-![architecture](https://github.com)
+![architecture]([https://github.com](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/Flow.png))
 
 - `tier1/` — on-device pipeline (face detection, landmarks, convex-hull blurring, per-stream AES keys, encryption of face packets and embeddings).
 - `tier2/` — companion-phone synthetic replacement pipeline and Android demo app (warping + MobileFaceSwap refinement).
@@ -230,3 +230,4 @@ The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation frame
    ```bash
 
    jupyter notebook SITARA_eval.ipynb
+

@@ -35,7 +35,7 @@ The repository contains code and assets mapped to the paper’s three tiers:
   <img src="imgs/latency_eval.png" alt="Latency by scene type and faces" width="32%">
 </p>
 
-The figures above summarize storage, energy, and latency for SITARA across 12 categories
+The figures above summarize storage, energy, and latency for our system across 12 categories
 (Close, Medium, Far, Head, Bystander, Rest, and 0–5 Face). The tables below list the exact values.
 
 ### Summary vs. Baseline
@@ -55,7 +55,7 @@ The figures above summarize storage, energy, and latency for SITARA across 12 ca
 |:---|---:|---:|---:|---:|---:|
 | Latency (s) | 9.98 (±0.01) | 13.69 | 22.88 | 1.37× | 2.29× |
 
-> Interpretation: relative to the baseline pipeline, SITARA’s full (privacy + synthetic) mode increases
+> Interpretation: relative to the baseline pipeline, our system’s full (privacy + synthetic) mode increases
 > average **energy** by ~2.8× and **time** by ~2.29×; **storage** rises ~23.5% on average.
 
 ---
@@ -267,7 +267,7 @@ We release a sampled subset (16,500 annotated frames) captured with Ray-Ban Meta
 
 #### **SITARA_eval.ipynb — Full Accuracy Evaluation Pipeline**
 
-The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation framework** for SITARA, enabling in-depth analysis of detection, embedding, and restoration performance. It is designed to reproduce and extend the accuracy results reported in the paper with fully configurable evaluation parameters.
+The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation framework** for our system, enabling in-depth analysis of detection, embedding, and restoration performance. It is designed to reproduce and extend the accuracy results reported in the paper with fully configurable evaluation parameters.
 
 ---
 
@@ -296,6 +296,7 @@ The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation frame
    ```bash
 
    jupyter notebook SITARA_eval.ipynb
+
 
 
 

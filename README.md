@@ -27,6 +27,68 @@ The repository contains code and assets mapped to the paper’s three tiers:
 - `scripts/` — utilities to run experiments, convert formats, and reproduce the evaluation.
 
 
+## Evaluation (images + tables)
+
+<p align="center">
+  <img src="imgs/storage_eval.png" alt="Storage overhead by scene type and faces" width="32%">
+  <img src="imgs/energy_eval.png" alt="Energy by scene type and faces" width="32%">
+  <img src="imgs/latency_eval.png" alt="Latency by scene type and faces" width="32%">
+</p>
+
+The figures above summarize storage, energy, and latency for SITARA across 12 categories
+(Close, Medium, Far, Head, Bystander, Rest, and 0–5 Face). The tables below list the exact values.
+
+### Summary vs. Baseline
+
+**Storage**
+| Metric | Baseline | Average (all categories) | Overhead vs baseline |
+|:---|---:|---:|---:|
+| Storage (MB) | 56.16 | 69.33 | 23.5% |
+
+**Energy**
+| Metric | Baseline | Avg privacy-only | Avg privacy+synthetic | Overhead (privacy) | Overhead (full) |
+|:---|---:|---:|---:|---:|---:|
+| Energy (J) | 40.00 (±0.81) | 67.04 | 112.05 | 1.68× | 2.80× |
+
+**Latency**
+| Metric | Baseline | Avg privacy-only | Avg privacy+synthetic | Overhead (privacy) | Overhead (full) |
+|:---|---:|---:|---:|---:|---:|
+| Latency (s) | 9.98 (±0.01) | 13.69 | 22.88 | 1.37× | 2.29× |
+
+> Interpretation: relative to the baseline pipeline, SITARA’s full (privacy + synthetic) mode increases
+> average **energy** by ~2.8× and **time** by ~2.29×; **storage** rises ~23.5% on average.
+
+---
+
+### Per-scene type (Close / Medium / Far / Head / Bystander / Rest)
+
+| Scene type | Storage (MB) | Storage ↑% vs 56.16 MB | Energy (J) | Energy ↑% vs 40 J | Latency (s) | Latency ↑% vs 9.98 s |
+|:---|---:|---:|---:|---:|---:|---:|
+| Close | 88.20 | 57.1% | 91.28 | 128.2% | 18.45 | 84.9% |
+| Medium | 71.90 | 28.0% | 83.84 | 109.6% | 17.31 | 73.4% |
+| Far | 65.00 | 15.7% | 78.49 | 96.2% | 15.59 | 56.2% |
+| Head | 62.10 | 10.6% | 84.60 | 111.5% | 16.99 | 70.2% |
+| Bystander | 66.50 | 18.4% | 86.49 | 116.2% | 17.40 | 74.3% |
+| Rest | 72.70 | 29.5% | 83.14 | 107.8% | 17.43 | 74.6% |
+
+---
+
+### By number of faces in frame (0–5)
+
+| Category | Storage (MB) | Storage ↑% vs 56.16 MB | Energy (J) | Energy ↑% vs 40 J | Latency (s) | Latency ↑% vs 9.98 s |
+|:---|---:|---:|---:|---:|---:|---:|
+| 0 Face | 55.00 | −2.1% | 49.66 | 24.1% | 10.02 | 0.4% |
+| 1 Face | 70.30 | 25.2% | 85.24 | 113.1% | 17.89 | 79.3% |
+| 2 Face | 67.90 | 20.9% | 117.44 | 193.6% | 24.04 | 140.9% |
+| 3 Face | 69.60 | 23.9% | 149.28 | 273.2% | 30.89 | 209.5% |
+| 4 Face | 69.90 | 24.5% | 192.27 | 380.7% | 39.60 | 296.8% |
+| 5 Face | 72.80 | 29.6% | 242.81 | 507.0% | 48.88 | 389.8% |
+
+**Observations**
+- Energy & latency scale sharply with more faces (5-Face is the worst case: 242.81 J, 48.88 s).
+- “0 Face” is very close to baseline time (10.02 s) and only modestly above baseline energy (49.66 J).
+- Storage varies less with faces (roughly +20–30% vs baseline), peaking at 72.80 MB in 5-Face.
+- Among scene types, **Close** has the highest storage (88.20 MB).
 
 
 ---
@@ -234,6 +296,7 @@ The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation frame
    ```bash
 
    jupyter notebook SITARA_eval.ipynb
+
 
 
 

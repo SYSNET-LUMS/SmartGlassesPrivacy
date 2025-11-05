@@ -171,7 +171,9 @@ For further customization or troubleshooting, refer to comments within each scri
 
 ## Dataset Contents
 
-[Dataset Link](https://drive.google.com/drive/folders/1ApYf8pxH0Om5gLb2uIyenvLACjYiDzZN?usp=sharing)
+![dataset](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/Flow.png)
+We release a sampled subset (16,500 annotated frames) captured with Ray-Ban Meta-style glasses. The dataset includes:
+
 
 - **video_frames_mapping.csv**  
   Mapping of each video name to the extracted frame numbers.
@@ -192,6 +194,8 @@ For further customization or troubleshooting, refer to comments within each scri
 
 - **Size of Faces/**  
   Videos categorized by face size across datasets and videos.
+
+  [Dataset Link](https://drive.google.com/drive/folders/1ApYf8pxH0Om5gLb2uIyenvLACjYiDzZN?usp=sharing)
 
 
 ## Evaluation
@@ -230,4 +234,5 @@ The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation frame
    ```bash
 
    jupyter notebook SITARA_eval.ipynb
+
 

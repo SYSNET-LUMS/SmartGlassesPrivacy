@@ -27,7 +27,7 @@ The repository contains code and assets mapped to the paper’s three tiers:
 - `scripts/` — utilities to run experiments, convert formats, and reproduce the evaluation.
 
 
-## Evaluation (images + tables)
+## Evaluation 
 
 <p align="center">
   <img src="imgs/storage_eval.png" alt="Storage overhead by scene type and faces" width="32%">
@@ -296,6 +296,7 @@ The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation frame
    ```bash
 
    jupyter notebook SITARA_eval.ipynb
+
 
 
 

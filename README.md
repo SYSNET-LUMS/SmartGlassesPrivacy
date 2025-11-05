@@ -1,9 +1,35 @@
-# Now You See Me, Now You Don’t: Consent-Driven Privacy for Smart Glasses
+# Consent-Driven Privacy for Smart Glasses
 
-This repository provides the complete source code for the three-tier architecture of SITARA and the dataset described in the paper.
+This repository contains the reference implementation of Consent-Driven Privacy for Smart Glasses, a privacy-by-default, three-tier system that protects bystanders while preserving utility for consenting parties. The working prototype enforces on-device blurring at capture, stores only encrypted face packets and embeddings so raw facial pixels are never exposed, and supports landmark-driven synthetic face replacements on a companion phone. When a bystander explicitly consents, the system uses a cryptographic, consent-mediated split-key protocol with a trusted third party (TTP) to restore the original face, ensuring restoration is possible only with the required approval. The prototype runs in real time on Raspberry Pi–class hardware and the accompanying paper evaluates the privacy/utility trade-offs.
 
 ---
 
+## Highlights / contributions
+- **Privacy at capture** — mandatory on-device blurring and per-face encrypted face packets.
+- **Reversible & consented restoration** — a TTP-mediated split-key protocol ensures restorations only occur with bystander signatures.
+- **Usability-preserving synthetic replacement** — landmark-driven, mobile-optimized face replacement for wearer experience.
+- **Working prototype** — implemented on Raspberry Pi 4 + companion Android app.
+- **Dataset** — 16,500 annotated frames collected with Ray-Ban Meta hardware (released with this repo).
+
+
+
+---
+
+## Architecture 
+The repository contains code and assets mapped to the paper’s three tiers:
+
+![architecture](https://github.com)
+
+- `tier1/` — on-device pipeline (face detection, landmarks, convex-hull blurring, per-stream AES keys, encryption of face packets and embeddings).
+- `tier2/` — companion-phone synthetic replacement pipeline and Android demo app (warping + MobileFaceSwap refinement).
+- `tier3/` — prototype TTP mediator (server-side matching of encrypted embeddings to registered bystanders and consent-management simulation).
+- `dataset/` — sample frames, annotations, and instructions to recreate experiments.
+- `scripts/` — utilities to run experiments, convert formats, and reproduce the evaluation.
+
+
+
+
+---
 ## Setup
 
 1. **Clone the repository** (if you haven't already):
@@ -202,4 +228,5 @@ The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation frame
 2. **Open the Notebook**
 
    ```bash
+
    jupyter notebook SITARA_eval.ipynb

@@ -27,11 +27,8 @@ def encrypt_data_aes128(data, key):
     encrypted = cipher.encrypt(padded_data)
     return encrypted
 
-# Configuration knob for encryption rate
-ENCRYPTION_FRAME_INTERVAL = 1  # Encrypt every x frames
-
 # Load public key from PEM file
-with open("public_key.pem", "rb") as f:
+with open("encryption/public_key.pem", "rb") as f:
     public_key = RSA.import_key(f.read())
 
 # No need to save the key now
@@ -56,7 +53,7 @@ from src.backbones import get_model
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 class Config:
-    INPUT_VIDEO_PATH = "./input/test11.mov"
+    INPUT_VIDEO_PATH = "./input/test.mov"
     # INPUT_VIDEO_PATH = 0
     OUTPUT_VIDEO_PATH = "./output/blurred.mp4"
     SAVE_OUTPUT = True

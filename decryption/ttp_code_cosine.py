@@ -28,7 +28,7 @@ from src.backbones import get_model  # Make sure this is valid
 KEYS_PATH = "../output/face_keys.msgpack"
 PRIVATE_KEY_PATH = "private_key.pem"
 DB_PATH = os.path.abspath("../input/ttp_DB")
-SIMILARITY_THRESHOLD = 0.5
+SIMILARITY_THRESHOLD = 0.65
 
 # --- Load model ---
 model = get_model("edgeface_s_gamma_05")
@@ -286,6 +286,8 @@ print("\n📊 Final Matching Results:\n")
 print(tabulate(table_data, headers=["Group/Name", "Num Members", "Similarity"], tablefmt="pretty"))
 
 # save final output as JSON
+# This should only be saved in output directory / sent to wearer incase the match is found and the bystander responds in the affirmative.
+# For the sake of this demo, we will save it regardless of matching or bystander decision so we can view the restore functionality.
 output_path = "../output/final_matching_results.json"
 with open(output_path, "w") as f:
     json.dump(final_output, f, indent=4)

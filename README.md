@@ -1,304 +1,318 @@
-# Consent-Driven Privacy for Smart Glasses
+# 🕶️ Consent-Driven Privacy for Smart Glasses
 
-This repository contains the reference implementation of Consent-Driven Privacy for Smart Glasses, a privacy-by-default, three-tier system that protects bystanders while preserving utility for consenting parties. The working prototype enforces on-device blurring at capture, stores only encrypted face packets and embeddings so raw facial pixels are never exposed, and supports landmark-driven synthetic face replacements on a companion phone. When a bystander explicitly consents, the system uses a cryptographic, consent-mediated split-key protocol with a trusted third party (TTP) to restore the original face, ensuring restoration is possible only with the required approval. The prototype runs in real time on Raspberry Pi–class hardware and the accompanying paper evaluates the privacy/utility trade-offs.
+This repository contains the reference implementation of **Consent-Driven Privacy for Smart Glasses**, a privacy-by-default, three-tier system designed to protect bystanders while preserving utility for consenting parties.
 
----
+The system enforces **on-device blurring at capture**, storing only encrypted face packets and embeddings so raw facial pixels are never exposed. It supports landmark-driven **synthetic face replacements** on a companion phone for immediate wearer utility. When a bystander explicitly consents, the system uses a cryptographic, consent-mediated split-key protocol with a Trusted Third Party (TTP) to restore the original face.
 
-## Highlights / contributions
-- **Privacy at capture** — mandatory on-device blurring and per-face encrypted face packets.
-- **Reversible & consented restoration** — a TTP-mediated split-key protocol ensures restorations only occur with bystander signatures.
-- **Usability-preserving synthetic replacement** — landmark-driven, mobile-optimized face replacement for wearer experience.
-- **Working prototype** — implemented on Raspberry Pi 4 + companion Android app.
-- **Dataset** — 16,500 annotated frames collected with Ray-Ban Meta hardware (released with this repo).
-
-
+The prototype runs in real-time on **Raspberry Pi 4** hardware, and this repository includes the full pipeline, evaluation scripts, and a novel dataset.
 
 ---
 
-## Architecture 
-The repository contains code and assets mapped to the paper’s three tiers:
+## 🌟 Highlights & Contributions
+
+* **🔒 Privacy at Capture:** Mandatory on-device blurring with per-face encrypted packets.
+* **🔑 Reversible & Consented Restoration:** A TTP-mediated split-key protocol ensures restorations only occur with bystander signatures.
+* **🎭 Usability-Preserving Synthetic Replacement:** Landmark-driven, mobile-optimized face replacement to maintain wearer experience without compromising privacy.
+* **⚙️ Working Prototype:** Full implementation on Raspberry Pi 4 + companion Android app.
+* **📂 Dataset:** 16,500 annotated frames collected with Ray-Ban Meta hardware (released with this repo).
+
+---
+
+## 🏗️ Architecture
+
+The repository code and assets are mapped to the paper’s three-tier architecture:
 
 ![architecture](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/Flow.png)
 
-- `tier1/` — on-device pipeline (face detection, landmarks, convex-hull blurring, per-stream AES keys, encryption of face packets and embeddings).
-- `tier2/` — companion-phone synthetic replacement pipeline and Android demo app (warping + MobileFaceSwap refinement).
-- `tier3/` — prototype TTP mediator (server-side matching of encrypted embeddings to registered bystanders and consent-management simulation).
-- `dataset/` — sample frames, annotations, and instructions to recreate experiments.
-- `scripts/` — utilities to run experiments, convert formats, and reproduce the evaluation.
-
-
-## Evaluation 
-
-<p align="center">
-  <img src="imgs/storage_eval.png" alt="Storage overhead by scene type and faces" width="32%">
-  <img src="imgs/energy_eval.png" alt="Energy by scene type and faces" width="32%">
-  <img src="imgs/latency_eval.png" alt="Latency by scene type and faces" width="32%">
-</p>
-
-The figures above summarize storage, energy, and latency for our system across 12 categories
-(Close, Medium, Far, Head, Bystander, Rest, and 0–5 Face). The tables below list the exact values.
-
-### Summary vs. Baseline
-
-**Storage**
-| Metric | Baseline | Average (all categories) | Overhead vs baseline |
-|:---|---:|---:|---:|
-| Storage (MB) | 56.16 | 69.33 | 23.5% |
-
-**Energy**
-| Metric | Baseline | Avg privacy-only | Avg privacy+synthetic | Overhead (privacy) | Overhead (full) |
-|:---|---:|---:|---:|---:|---:|
-| Energy (J) | 40.00 (±0.81) | 67.04 | 112.05 | 1.68× | 2.80× |
-
-**Latency**
-| Metric | Baseline | Avg privacy-only | Avg privacy+synthetic | Overhead (privacy) | Overhead (full) |
-|:---|---:|---:|---:|---:|---:|
-| Latency (s) | 9.98 (±0.01) | 13.69 | 22.88 | 1.37× | 2.29× |
-
-> Interpretation: relative to the baseline pipeline, our system’s full (privacy + synthetic) mode increases
-> average **energy** by ~2.8× and **time** by ~2.29×; **storage** rises ~23.5% on average.
+| Component | Description |
+| :--- | :--- |
+| **`main.py`** | **On-Device Pipeline:** Handles face detection, landmark extraction, convex-hull blurring, per-stream AES key generation, and encryption of face packets/embeddings. |
+| **`Synthetic Replacement/`** | **Companion Pipeline:** Warping and MobileFaceSwap refinement for synthetic face generation. |
+| **`decryption/`** | **Restoration & TTP:** Includes `ttp_code_cosine.py` (server-side matching of encrypted embeddings) and `restore.py` (companion phone restoration). |
+| **`SITARA_eval.ipynb`** | **Evaluation:** Full accuracy evaluation framework. |
 
 ---
 
-### Per-scene type (Close / Medium / Far / Head / Bystander / Rest)
+## 📂 Dataset Contents
 
-| Scene type | Storage (MB) | Storage ↑% vs 56.16 MB | Energy (J) | Energy ↑% vs 40 J | Latency (s) | Latency ↑% vs 9.98 s |
-|:---|---:|---:|---:|---:|---:|---:|
-| Close | 88.20 | 57.1% | 91.28 | 128.2% | 18.45 | 84.9% |
-| Medium | 71.90 | 28.0% | 83.84 | 109.6% | 17.31 | 73.4% |
-| Far | 65.00 | 15.7% | 78.49 | 96.2% | 15.59 | 56.2% |
-| Head | 62.10 | 10.6% | 84.60 | 111.5% | 16.99 | 70.2% |
-| Bystander | 66.50 | 18.4% | 86.49 | 116.2% | 17.40 | 74.3% |
-| Rest | 72.70 | 29.5% | 83.14 | 107.8% | 17.43 | 74.6% |
+![dataset](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/dataset.png)
 
----
+We release a sampled subset (**16,500 annotated frames**) captured with Ray-Ban Meta-style glasses.
+**[🔗 Download Dataset Here](https://drive.google.com/drive/folders/1ApYf8pxH0Om5gLb2uIyenvLACjYiDzZN?usp=sharing)**
 
-### By number of faces in frame (0–5)
+The dataset includes:
 
-| Category | Storage (MB) | Storage ↑% vs 56.16 MB | Energy (J) | Energy ↑% vs 40 J | Latency (s) | Latency ↑% vs 9.98 s |
-|:---|---:|---:|---:|---:|---:|---:|
-| 0 Face | 55.00 | −2.1% | 49.66 | 24.1% | 10.02 | 0.4% |
-| 1 Face | 70.30 | 25.2% | 85.24 | 113.1% | 17.89 | 79.3% |
-| 2 Face | 67.90 | 20.9% | 117.44 | 193.6% | 24.04 | 140.9% |
-| 3 Face | 69.60 | 23.9% | 149.28 | 273.2% | 30.89 | 209.5% |
-| 4 Face | 69.90 | 24.5% | 192.27 | 380.7% | 39.60 | 296.8% |
-| 5 Face | 72.80 | 29.6% | 242.81 | 507.0% | 48.88 | 389.8% |
-
-**Observations**
-- Energy & latency scale sharply with more faces (5-Face is the worst case: 242.81 J, 48.88 s).
-- “0 Face” is very close to baseline time (10.02 s) and only modestly above baseline energy (49.66 J).
-- Storage varies less with faces (roughly +20–30% vs baseline), peaking at 72.80 MB in 5-Face.
-- Among scene types, **Close** has the highest storage (88.20 MB).
-
-
----
-## Setup
-
-1. **Clone the repository** (if you haven't already):
-
-    ```bash
-    git clone <repository-url>
-    cd SmartGlassesPrivacy
-    ```
-
-2. **Install dependencies** using the provided `requirements.txt` file:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. **Set up input and output folders and store input video in the input folder**:
-
-    ```bash
-    mkdir input
-    mkdir output
-    ```
+* **`video_frames_mapping.csv`**: Mapping of video filenames to extracted frame numbers.
+* **`Annotated XMLs/`**: Manually annotated XML files (`{VideoName}_Frame{FrameNumber}_output.xml`).
+* **`Annotated JSONs/`**: Manually annotated JSON files compatible with COCO metrics.
+* **Categorized Folders**:
+    * **`Movement of Faces/`**: Videos categorized by subject movement.
+    * **`Num of Faces/`**: Videos categorized by density (0–5 faces).
+    * **`Size of Faces/`**: Videos categorized by face size (Close, Medium, Far).
 
 ---
 
-## Changing Input and Output Video Paths
+## ⚙️ Setup & Installation
 
-To specify which video to blur and where to save the output, edit the `Config` class in `main.py`. Locate the following lines:
+### 1. Clone & Install
+```bash
+git clone <repository-url>
+cd SmartGlassesPrivacy
+pip install -r requirements.txt
+```
+
+### 2. Directory Setup
+Create the necessary input/output directories and place your source video in `input/`:
+
+```bash
+mkdir input
+mkdir output
+# Place your video.mp4 inside input/
+```
+
+### 3. Configuration
+Edit the `Config` class in `main.py` to point to your specific video and adjust parameters:
 
 ```python
 class Config:
     input_video_path = "./input/video.mp4"
     output_video_path = "./output/video.mp4"
+    OVERLAY_DETECTOR_BOX = False # Set True for debugging
+    SAVE_OUTPUT = True
     # ...other config options...
 ```
 
-- Set `input_video_path` to the path of your input video file.
-- Set `output_video_path` to the desired path for the blurred output video.
-
-Set other hyperparameters like `OVERLAY_DETECTOR_BOX`, `DISPLAY_VIDEO`, and `SAVE_OUTPUT` as needed.  
-Save your changes and run `main.py`.  
-You may also use `encrypt.py` in the encryption folder.
-
 ---
 
-## Usage
+## 🚀 Usage
+
+### 1. On-Device Capture (Blurring & Encryption)
+Run the main pipeline to generate the blurred video, encrypted metadata, face embeddings, and landmark files:
 
 ```bash
 python main.py
 ```
 
-This will generate the relevant encrypted metadata, face embedding, and landmark files along with the blurred video in the output directory.
+**Note:** `main.py` uses a sequential demo approach for easy prototyping. For the actual concurrency testing described in the paper (using the 3-queue model), please refer to `encryption/performance_eval_rpi.py`.
 
----
+### 2. Restoration (Decryption)
+To demo the consent-based restoration, navigate to the decryption folder.
 
-### Both these files are an abstraction to allow for easy prototyping and demo. For actual testing, the performance_eval_rpi.py file in the encryption folder was used. The only differences are the use of picamera interface instead of the openCV interface (to support the camera module) and the use of the actual three queue model described in the paper instead of a demo sequential approach in main.py.
-
-
-## Restoration
-
-To demo the restoration mechanism, navigate to the decryption folder:
+#### Step A: Simulate TTP Matching
+This script decrypts embeddings, matches them against a local "database" (images in the output folder), and generates keys for valid matches:
 
 ```bash
 cd decryption
-```
-
-Then execute the `ttp_code_cosine.py` file. This file requires that you specify a `DB_PATH` consisting of face images in the output folder, simulating the TTP Database of faces.
-
-```bash
 python ttp_code_cosine.py
 ```
 
-This file will decrypt the relevant keys and then decrypt the embeddings generated initially. It will then match the embeddings with the faces in the database and generate a `final_matching_results.json` file that stores (in reality it would send to the wearer securely) the unencrypted keys in the output folder.
-
-Then execute the `restore.py` file to generate the restored video:
+#### Step B: Restore Video
+Using the keys released by the TTP, restore the original faces:
 
 ```bash
 python restore.py
 ```
 
-The restored video will be generated in the output folder.
+**Optional utility:** Run `decrypt_face_blobs_per_id.py` to inspect decrypted face regions as standalone JPEGs.
 
-You can also execute the utility file `decrypt_face_blobs_per_id.py`, which will use the encrypted metadata and the TTP private key to decrypt and store the face regions as JPEGs for reference.
+### 3. Synthetic Replacement
+Warp a video with a synthetic face and refine it using MobileFaceSwap.
 
----
+**Prerequisites:**
+- Ensure `MobileFaceSwap/` (with `video_test.py` and checkpoints) is inside the `Synthetic Replacement` folder.
+- Ensure `synthetic_faces/` and `synthetic_landmarks/` are populated.
 
-## Synthetic Replacement
-
-Warp a video with a synthetic face using `warping.py`, then optionally run **MobileFaceSwap** on the warped result, all from one CLI.
-
-### Prerequisites
-
-- Navigate to the Synthetic Replacement folder.
-- Place **MobileFaceSwap** next to `main.py`:
-    - `MobileFaceSwap/video_test.py`
-    - `MobileFaceSwap/checkpoints/arcface.pdparams` (and any other weights that repo requires)
-- Place assets next to `main.py`:
-    - `synthetic_faces/` (face images, e.g., `female1.jpg`)
-    - `synthetic_landmarks/` (matching `.txt` files with the same stem, e.g., `female1.txt`)
-    - `video_colors.json` mapping video basename → RGB  
-      Example:
-      ```json
-      { "blurred": "(29,25,24)" }
-      ```
-
-### Expected Landmarks Layout (for the input video)
-
-```
-<landmarks_root>/
-  <video_basename>/
-    face_0/
-      frame_0000.txt
-      frame_0001.txt
-    face_1/
-    ...
-```
-
-### Run (Single Video)
-
+**Run Command:**
 ```bash
+cd "Synthetic Replacement"
 python main.py \
   --video "/absolute/path/to/your_video.mp4" \
   --landmarks_root "/absolute/path/to/video_landmarks" \
   --after_swap
 ```
 
-> You do **not** need to pass `--synth_img_folder`, `--synth_lm_folder`, `--output_root`, or `--mfs_script`; the script uses local folders next to `main.py`.
-
-### Outputs
-
-- `<repo_dir>/<video_name>.mp4` — warped video
-- `<repo_dir>/best_match/` — chosen synthetic (image + landmarks + manifest)
-- MobileFaceSwap’s swapped result will also be written under `<repo_dir>` (naming per that script).
+**Output:** The script generates the warped video and the final swapped result in the repo directory.
 
 ---
 
-For further customization or troubleshooting, refer to comments within each script.
+## 📊 Evaluation & Results
+
+### 🧪 Accuracy Evaluation (SITARA_eval.ipynb)
+We provide a Jupyter Notebook to reproduce our COCO-style metrics (AP/AR):
+
+- Ensure Ground Truth JSONs are in `Annotated JSONs/`
+- Ensure Prediction JSONs (from `main.py`) are in `output/frame_json/`
+- Run: `jupyter notebook SITARA_eval.ipynb`
+
+### Privacy Protection (Tier 1 Blurring)
+
+#### Detailed Breakdown (AP/AR)
+Values in **bold** indicate the best performance in the comparison.
+
+| Category | Sub-Category | Our Pipeline (AP) | Our Pipeline (AR) | EgoBlur (AP) | EgoBlur (AR) |
+|----------|--------------|-------------------|-------------------|--------------|--------------|
+| **Number of Faces** | One Face | 0.990 | 0.997 | 0.932 | 1.000 |
+| | Two Face | 0.967 | 0.979 | 0.963 | 0.982 |
+| | Three Face | 0.979 | 0.982 | 0.974 | 0.981 |
+| | Four Face | 0.900 | 0.904 | 0.909 | 0.934 |
+| | Five Face | 0.882 | 0.917 | 0.952 | 0.969 |
+| **Movement State** | Rest | 0.990 | 0.998 | 0.971 | 0.999 |
+| | Head | 0.920 | 0.947 | 0.925 | 0.980 |
+| | Bystander | 0.959 | 0.968 | 0.961 | 0.983 |
+| **Face Size** | Far | 1.000 | 1.000 | 0.930 | 1.000 |
+| | Medium | 0.990 | 0.992 | 0.856 | 0.993 |
+| | Close | 0.990 | 0.997 | 0.989 | 1.000 |
+
+#### Summary: Ours vs. Baseline
+
+| Method | CCV2 (AP) | CCV2 (AR) | Custom Dataset (AP) | Custom Dataset (AR) |
+|--------|-----------|-----------|---------------------|---------------------|
+| Our Pipeline | 0.98 | 0.99 | 0.9421 | 0.9531 |
+| EgoBlur | 0.99 | 0.99 | 0.9354 | 0.9736 |
+
+### Synthetic Face Replacement
+
+#### Category Breakdown
+Arrows indicate if higher (↑) or lower (↓) is better.
+
+| Metric | Baseline | Our Pipeline (Sitara) | Theoretical Range |
+|--------|----------|----------------------|-------------------|
+| FID ↓ | 31.00 ± 13.83 | 63.70 ± 27.78 | ≥ 0 |
+| SSIM ↑ | 0.76 ± 0.07 | 0.61 ± 0.07 | [0, 1] |
+| PSNR (dB) ↑ | 15.87 ± 2.77 | 12.85 ± 1.95 | [0, ∞) |
+| LPIPS ↓ | 0.14 ± 0.06 | 0.27 ± 0.07 | [0, 1] |
+| Landmark Dist. ↓ | 8.81 ± 3.99 | 15.94 ± 7.13 | [0, ∞) |
+
+### System Cost (Storage, Energy, Latency)
+System latency and energy overheads are reported on live videos recorded using RPI Camera Module 1.3. The measurement workbench is shown here:
+![workbench](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/setup.png)
+
+#### Summary vs. Baseline
+
+| Metric | Baseline | Average (Privacy Only) | Average (Privacy + Synthetic) | Overhead (Full) |
+|--------|----------|------------------------|-------------------------------|-----------------|
+| Storage | 56.16 MB | — | 69.33 MB | +23.5% |
+| Energy | 40.00 J | 67.04 J | 112.05 J | 2.80× |
+| Latency | 9.98 s | 13.69 s | 22.88 s | 2.29× |
+
+**Interpretation:** Relative to the baseline, the full system (Privacy + Synthetic) increases average energy by ~2.8× and latency by ~2.29×. Storage overhead is modest at ~23.5%.
+
+#### System Cost breakdown per category
+
+<p align="center">
+<img src="imgs/storage_eval.png" alt="Storage overhead" width="30%">
+<img src="imgs/energy_eval.png" alt="Energy overhead" width="30%">
+<img src="imgs/latency_eval.png" alt="Latency overhead" width="30%">
+</p>
+
+#### Detailed Breakdown by Scene Type
+
+| Scene type | Storage (MB) | Energy (J) | Latency (s) |
+|------------|--------------|------------|-------------|
+| Close | 88.20 | 91.28 | 18.45 |
+| Medium | 71.90 | 83.84 | 17.31 |
+| Far | 65.00 | 78.49 | 15.59 |
+| Head | 62.10 | 84.60 | 16.99 |
+| Bystander | 66.50 | 86.49 | 17.40 |
+| Rest | 72.70 | 83.14 | 17.43 |
+
+#### Detailed Breakdown by Number of Faces
+
+| Category | Storage (MB) | Energy (J) | Latency (s) |
+|----------|--------------|------------|-------------|
+| 0 Face | 55.00 | 49.66 | 10.02 |
+| 1 Face | 70.30 | 85.24 | 17.89 |
+| 2 Face | 67.90 | 117.44 | 24.04 |
+| 3 Face | 69.60 | 149.28 | 30.89 |
+| 4 Face | 69.90 | 192.27 | 39.60 |
+| 5 Face | 72.80 | 242.81 | 48.88 |
+
+#### Power Consumption Traces by Category
+
+The figure below shows Power Consumption traces for each category on RPi 4 B:
+
+<p align="center">
+<img src="imgs/comparison.png" alt="Power consumption comparison" width="80%">
+</p>
 
 ---
 
-## Dataset Contents
+## 🔬 System Performance Deep Dive
 
-![dataset](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/dataset.png)
-We release a sampled subset (16,500 annotated frames) captured with Ray-Ban Meta-style glasses. The dataset includes:
+### Tier 1: On-Device Face Blurring and Encryption
 
+On-device face blurring and encryption processes each frame through: **Face Detector → Landmark Detector → Blurring + Encryption**. The largest computational cost is running full-frame face detection.
 
-- **video_frames_mapping.csv**  
-  Mapping of each video name to the extracted frame numbers.
+#### Detector Inference Cost
 
-- **Annotated XMLs/**  
-  Manually annotated XML files.  
-  Naming convention: `{VideoName}_Frame{FrameNumber}_output.xml`
+The figure below highlights the detector inference cost in terms of Power (W) and Time (ms) on RPi 4 Model B:
 
-- **Annotated JSONs/**  
-  Manually annotated JSON files.  
-  Naming convention: `{VideoName}_Frame{FrameNumber}_output.json`
+<p align="center">
+<img src="imgs/setup.png" alt="Detector inference setup" width="70%">
+</p>
 
-- **Movement of Faces/**  
-  Videos categorized by face movement.
+#### Frame Skip Strategy & Optical Flow Tracking
 
-- **Num of Faces/**  
-  Videos categorized by number of faces.
+To reduce this computational bottleneck, we utilize a **frame skip strategy** with optical flow tracking between frames. The figures below show the Accuracy-Latency tradeoff across skip values:
 
-- **Size of Faces/**  
-  Videos categorized by face size across datasets and videos.
+<p align="center">
+<img src="imgs/skipping.png" alt="Frame skipping strategy" width="45%">
+<img src="imgs/paretoyellow.png" alt="Pareto frontier" width="45%">
+</p>
 
-  [Dataset Link](https://drive.google.com/drive/folders/1ApYf8pxH0Om5gLb2uIyenvLACjYiDzZN?usp=sharing)
+### Tier 2: Synthetic Face Replacement
 
+Synthetic Replacement applies landmark-driven replacement on **blurred** inputs. We compare our pipeline with a baseline where synthetic replacements are applied on **unblurred** faces as a target upper-bound.
 
-## Evaluation
-### All latency and energy evaluations were done manually for live videos recorded by a plugged pi camera module using the performance_eval_rpi.py file in the encryption folder. It also requires mounting a USB drive in the /mnt/usb folder as described in the paper.
+#### Visual Quality Comparison
 
-### 📊 Accuracy Evaluation
+The figure below visually demonstrates Tier 2 synthetic replacement accuracy for our pipeline compared with baselines:
 
-#### **SITARA_eval.ipynb — Full Accuracy Evaluation Pipeline**
+<p align="center">
+<img src="imgs/finalGrid.png" alt="Synthetic faces quality comparison" width="90%">
+</p>
 
-The `SITARA_eval.ipynb` notebook provides a **complete accuracy evaluation framework** for our system, enabling in-depth analysis of detection, embedding, and restoration performance. It is designed to reproduce and extend the accuracy results reported in the paper with fully configurable evaluation parameters.
+### Tier 3: Consent-Based Restoration
+
+We implement the consent-based restoration flow through a simulated server architecture:
+
+#### Restoration Pipeline Flow
+
+1. **`main.py`** - Executes the code for the camera glasses, generating blurred video and encrypted data.
+
+2. **`decryption/transmit_data_to_phone.py`** - Transmits encrypted data to the phone and subsequently encrypted keys and embeddings to the TTP (placed in decryption folder).
+
+3. **`decryption/ttp_code_cosine.py`** - Performs the matching on the TTP server.
+
+4. **`decryption/transmit_keys_to_phone.py`** - Transmits the decrypted keys back to the companion phone (assuming consent is granted).
+
+5. **Companion Phone Application** - Listens for this data and uses the key(s) to decrypt the data and restore the decrypted regions back into the blurred video.
+
+#### Running the Restoration Flow
+
+**Prerequisites:**
+- The companion Android application should be running for both transmit files.
+- Ensure all encrypted data is generated from `main.py` before starting the restoration process.
+
+**Execution Order:**
+```bash
+# Step 1: Generate encrypted data
+python main.py
+
+# Step 2: Transmit to phone and TTP
+cd decryption
+python transmit_data_to_phone.py
+
+# Step 3: TTP performs matching
+python ttp_code_cosine.py
+
+# Step 4: Transmit keys back to phone
+python transmit_keys_to_phone.py
+```
+
+#### Companion Android Application
+
+The Android application implementation can be found at this drive link:
+**[🔗 Download Android App]({https://drive.google.com/drive/u/4/folders/1MIjSEbBOurB1UHyRVYXc_2DuNivU9QtL})**  
 
 ---
-
-### 🧪 Features of `SITARA_eval.ipynb`
-
-| Feature | Description |
-|--------|-------------|
-| 🔄 **COCO-style Metrics** | Computes standard COCO detection metrics (AP/AR) across multiple IoU thresholds. |
-| 📈 **Confidence Threshold Tuning** | Allows you to adjust detection confidence thresholds dynamically to study precision-recall trade-offs. |
-| ⏩ **Frame Skip Evaluation** | Evaluates performance under different frame skip values to analyze latency-accuracy trade-offs. |
-| 📊 **Per-Video & Aggregate Results** | Generates metrics for each individual video and summarizes results across the dataset. |
-| 📁 **GT vs Prediction Comparison** | Compares your model’s outputs with ground truth annotations to quantify detection and localization accuracy. |
-| 🔍 **Visual Debugging** | Provides visualization cells to inspect false positives, false negatives, and mislocalized detections by saving frames. |
-| 📁 **COCO Format Integration** | Supports reading ground truth and prediction data in COCO-compatible JSON format (as generated by your pipeline). |
-
----
-
-### 🛠️ How to Use
-
-1. **Prepare Ground Truth & Prediction Data**  
-   - Ensure ground truth annotation JSONs are available under the `Annotated JSONs/` directory.  
-   - Make sure prediction JSON files (from the blurring pipeline) are stored in `output/frame_json/`.
-
-2. **Open the Notebook**
-
-   ```bash
-
-   jupyter notebook SITARA_eval.ipynb
-
-
-
-
-
-

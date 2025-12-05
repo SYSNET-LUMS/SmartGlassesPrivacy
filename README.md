@@ -189,8 +189,8 @@ The following table shows a summarized version of results.
 
 ### System Cost (Storage, Energy, Latency)
 System latency and energy overheads are reported on live videos recorded using RPI Camera Module 1.3. The measurement workbench is shown here:
-![workbench](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/setup.png)
 
+![workbench](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/setup.png)
 #### Summary vs. Baseline
 
 | Metric  | Baseline | Average (Privacy Only) | Average (Privacy + Synthetic) |
@@ -249,7 +249,7 @@ On-device face blurring and encryption processes each frame through: **Face Dete
 The figure below highlights the detector inference cost in terms of Power (W) and Time (ms) on RPi 4 Model B:
 
 <p align="center">
-<img src="imgs/detector_trace_final.png" alt="Detector inference setup" width="95%">
+<img src="imgs/detector_trace_final.png" alt="Detector inference setup" width="85%">
 </p>
 
 #### Frame Skip Strategy & Optical Flow Tracking
@@ -257,10 +257,10 @@ The figure below highlights the detector inference cost in terms of Power (W) an
 To reduce this computational bottleneck, we utilize a **frame skip strategy** with optical flow tracking between frames. The figures below show the Accuracy-Latency tradeoff across skip values:
 
 <p align="center">
-<img src="imgs/skipping.png" alt="Frame skipping strategy" width="95%">
+<img src="imgs/skipping.png" alt="Frame skipping strategy" width="85%">
 </p>
 <p align="center">
-<img src="imgs/paretoyellow.png" alt="Pareto frontier" width="95%">
+<img src="imgs/paretoyellow.png" alt="Pareto frontier" width="85%">
 
 ### Tier 2: Synthetic Face Replacement
 
@@ -271,7 +271,7 @@ Synthetic Replacement applies landmark-driven replacement on **blurred** inputs.
 The figure below visually demonstrates Tier 2 synthetic replacement accuracy for our pipeline compared with baselines:
 
 <p align="center">
-<img src="imgs/finalGrid.png" alt="Synthetic faces quality comparison" width="90%">
+<img src="imgs/finalGrid.png" alt="Synthetic faces quality comparison" width="80%">
 </p>
 
 ### Tier 3: Consent-Based Restoration

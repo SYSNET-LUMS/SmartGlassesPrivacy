@@ -314,6 +314,6 @@ python transmit_keys_to_phone.py
 
 #### Companion Android Application
 
-The Android application implementation can be found at this drive link:{https://drive.google.com/drive/u/4/folders/1MIjSEbBOurB1UHyRVYXc_2DuNivU9QtL}
+The Android application implementation can be found at this drive link: https://drive.google.com/drive/u/4/folders/1MIjSEbBOurB1UHyRVYXc_2DuNivU9QtL
 
 ---

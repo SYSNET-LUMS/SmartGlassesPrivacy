@@ -249,7 +249,7 @@ On-device face blurring and encryption processes each frame through: **Face Dete
 The figure below highlights the detector inference cost in terms of Power (W) and Time (ms) on RPi 4 Model B:
 
 <p align="center">
-<img src="imgs/detector_trace_final.png" alt="Detector inference setup" width="70%">
+<img src="imgs/detector_trace_final.png" alt="Detector inference setup" width="95%">
 </p>
 
 #### Frame Skip Strategy & Optical Flow Tracking
@@ -257,9 +257,10 @@ The figure below highlights the detector inference cost in terms of Power (W) an
 To reduce this computational bottleneck, we utilize a **frame skip strategy** with optical flow tracking between frames. The figures below show the Accuracy-Latency tradeoff across skip values:
 
 <p align="center">
-<img src="imgs/skipping.png" alt="Frame skipping strategy" width="45%">
-<img src="imgs/paretoyellow.png" alt="Pareto frontier" width="45%">
+<img src="imgs/skipping.png" alt="Frame skipping strategy" width="95%">
 </p>
+<p align="center">
+<img src="imgs/paretoyellow.png" alt="Pareto frontier" width="95%">
 
 ### Tier 2: Synthetic Face Replacement
 

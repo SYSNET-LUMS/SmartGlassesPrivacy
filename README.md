@@ -141,7 +141,7 @@ python main.py \
 We provide a Jupyter Notebook to reproduce our COCO-style metrics (AP/AR):
 
 - Ensure Ground Truth JSONs are in `Annotated JSONs/`
-- Ensure Prediction JSONs (from `main.py`) are in `output/frame_json/`
+- Ensure Prediction JSONs are in `output/frame_json/`
 - Run: `jupyter notebook SITARA_eval.ipynb`
 
 ### Privacy Protection (Tier 1 Blurring)
@@ -151,29 +151,33 @@ Values in **bold** indicate the best performance in the comparison.
 
 | Category | Sub-Category | Our Pipeline (AP) | Our Pipeline (AR) | EgoBlur (AP) | EgoBlur (AR) |
 |----------|--------------|-------------------|-------------------|--------------|--------------|
-| **Number of Faces** | One Face | 0.990 | 0.997 | 0.932 | 1.000 |
-| | Two Face | 0.967 | 0.979 | 0.963 | 0.982 |
-| | Three Face | 0.979 | 0.982 | 0.974 | 0.981 |
-| | Four Face | 0.900 | 0.904 | 0.909 | 0.934 |
-| | Five Face | 0.882 | 0.917 | 0.952 | 0.969 |
-| **Movement State** | Rest | 0.990 | 0.998 | 0.971 | 0.999 |
-| | Head | 0.920 | 0.947 | 0.925 | 0.980 |
-| | Bystander | 0.959 | 0.968 | 0.961 | 0.983 |
-| **Face Size** | Far | 1.000 | 1.000 | 0.930 | 1.000 |
-| | Medium | 0.990 | 0.992 | 0.856 | 0.993 |
-| | Close | 0.990 | 0.997 | 0.989 | 1.000 |
+| **Number of Faces** | One Face | **0.990** | 0.997 | 0.932 | **1.000** |
+| | Two Face | **0.967** | 0.979 | 0.963 | **0.982** |
+| | Three Face | **0.979** | **0.982** | 0.974 | 0.981 |
+| | Four Face | 0.900 | 0.904 | **0.909** | **0.934** |
+| | Five Face | 0.882 | 0.917 | **0.952** | **0.969** |
+| **Movement State** | Rest | **0.990** | 0.998 | 0.971 | **0.999** |
+| | Head | 0.920 | 0.947 | **0.925** | **0.980** |
+| | Bystander | 0.959 | 0.968 | **0.961** | **0.983** |
+| **Face Size** | Far | **1.000** | **1.000** | 0.930 | **1.000** |
+| | Medium | **0.990** | 0.992 | 0.856 | **0.993** |
+| | Close | **0.990** | 0.997 | 0.989 | **1.000** |
 
 #### Summary: Ours vs. Baseline
 
 | Method | CCV2 (AP) | CCV2 (AR) | Custom Dataset (AP) | Custom Dataset (AR) |
 |--------|-----------|-----------|---------------------|---------------------|
-| Our Pipeline | 0.98 | 0.99 | 0.9421 | 0.9531 |
-| EgoBlur | 0.99 | 0.99 | 0.9354 | 0.9736 |
+| Our Pipeline | 0.98 | **0.99** | **0.9421** | 0.9531 |
+| EgoBlur | **0.99** | **0.99** | 0.9354 | **0.9736** |
 
 ### Synthetic Face Replacement
 
 #### Category Breakdown
-Arrows indicate if higher (↑) or lower (↓) is better.
+The figure below shows a category wise breakdown of synthetic face replacement metrics.
+
+![synthetic results](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/latest_new.png)
+
+The following table shows a summarized version of results.
 
 | Metric | Baseline | Our Pipeline (Sitara) | Theoretical Range |
 |--------|----------|----------------------|-------------------|
@@ -189,21 +193,18 @@ System latency and energy overheads are reported on live videos recorded using R
 
 #### Summary vs. Baseline
 
-| Metric | Baseline | Average (Privacy Only) | Average (Privacy + Synthetic) | Overhead (Full) |
-|--------|----------|------------------------|-------------------------------|-----------------|
-| Storage | 56.16 MB | — | 69.33 MB | +23.5% |
-| Energy | 40.00 J | 67.04 J | 112.05 J | 2.80× |
-| Latency | 9.98 s | 13.69 s | 22.88 s | 2.29× |
-
-**Interpretation:** Relative to the baseline, the full system (Privacy + Synthetic) increases average energy by ~2.8× and latency by ~2.29×. Storage overhead is modest at ~23.5%.
+| Metric  | Baseline | Average (Privacy Only) | Average (Privacy + Synthetic) |
+|---------|----------|------------------------|-------------------------------|
+| Storage | 56.16 MB | — | 69.33 MB |
+| Energy  | 40.00 J  | 67.04 J | 112.05 J                      |
+| Latency | 9.98 s   | 13.69 s | 22.88 s|
 
 #### System Cost breakdown per category
+![Storage](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/storage_eval.png)
 
-<p align="center">
-<img src="imgs/storage_eval.png" alt="Storage overhead" width="30%">
-<img src="imgs/energy_eval.png" alt="Energy overhead" width="30%">
-<img src="imgs/latency_eval.png" alt="Latency overhead" width="30%">
-</p>
+![Energy](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/energy_eval.png)
+
+![Latency](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/latency_eval.png)
 
 #### Detailed Breakdown by Scene Type
 
@@ -248,7 +249,7 @@ On-device face blurring and encryption processes each frame through: **Face Dete
 The figure below highlights the detector inference cost in terms of Power (W) and Time (ms) on RPi 4 Model B:
 
 <p align="center">
-<img src="imgs/setup.png" alt="Detector inference setup" width="70%">
+<img src="imgs/detector_trace_final.png" alt="Detector inference setup" width="70%">
 </p>
 
 #### Frame Skip Strategy & Optical Flow Tracking
@@ -312,7 +313,6 @@ python transmit_keys_to_phone.py
 
 #### Companion Android Application
 
-The Android application implementation can be found at this drive link:
-**[🔗 Download Android App]({https://drive.google.com/drive/u/4/folders/1MIjSEbBOurB1UHyRVYXc_2DuNivU9QtL})**  
+The Android application implementation can be found at this drive link:{https://drive.google.com/drive/u/4/folders/1MIjSEbBOurB1UHyRVYXc_2DuNivU9QtL}
 
 ---

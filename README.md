@@ -170,6 +170,10 @@ Values in **bold** indicate the best performance in the comparison.
 | Our Pipeline | 0.98 | **0.99** | **0.9421** | 0.9531 |
 | EgoBlur | **0.99** | **0.99** | 0.9354 | **0.9736** |
 
+#### The following figure highlights the stability of Tier 1 Blurring Accuracy across detector confidence thresholds
+
+![detector_confidence](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/confpink.png)
+
 ### Synthetic Face Replacement
 
 #### Category Breakdown

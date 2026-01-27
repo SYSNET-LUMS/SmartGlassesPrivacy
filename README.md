@@ -176,6 +176,8 @@ Values in **bold** indicate the best performance in the comparison.
 
 ### Synthetic Face Replacement
 
+The evaluation.py file inside the Synthetic Replacement folder compares our pipeline with the baseline (MFS) across 5 different metrics. Modify the folder path containing original videos, MFS videos, and videos using our pipeline.
+
 #### Category Breakdown
 The figure below shows a category wise breakdown of synthetic face replacement metrics.
 
@@ -321,3 +323,4 @@ python transmit_keys_to_phone.py
 The Android application implementation can be found at this drive link: https://drive.google.com/drive/u/4/folders/1MIjSEbBOurB1UHyRVYXc_2DuNivU9QtL
 
 ---
+

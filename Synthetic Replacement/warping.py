@@ -121,7 +121,7 @@ class FaceSwapper:
 
         landmarks_video_folder = os.path.join(landmarks_root, video_name)
         if not os.path.exists(landmarks_video_folder):
-            print(f"⚠️ No landmarks folder found for video {video_name}")
+            print(f"⚠️ No landmarks folder found for video {video_name}.mp4")
             return
 
         setup_start = time.time()
@@ -157,7 +157,7 @@ class FaceSwapper:
                 break
 
             frame_start = time.time()
-            frame_name = f"frame_{frame_num:04d}"
+            frame_name = f"frame_{frame_num}"
             canvas = frame.copy()
 
             face_folders = [f for f in os.listdir(landmarks_video_folder) 

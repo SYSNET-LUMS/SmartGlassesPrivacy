@@ -81,6 +81,8 @@ class Config:
     OVERLAY_LANDMARKS = False
     OVERLAY_DETECTOR_BOX = False
     DISPLAY_VIDEO = True
+    
+    LANDMARKS_PATH = "./Synthetic Replacement/landmarks_root"
 
 total_inference_times = []
 total_blur_times = []
@@ -136,6 +138,7 @@ if __name__ == "__main__":
 
         face_metadata = {}  # sidecar dict to collect encrypted metadata
         landmarks_data = {}
+        landmarks_data_normal = {}
 
         face_tracks = {}  # face_id: {"box": (x1,y1,x2,y2), "aes_key": key}
         MAX_CENTER_DIST = 60 # Vary this
@@ -288,7 +291,9 @@ if __name__ == "__main__":
                         landmarks_adjusted = np.array(landmarks_scaled)  # shape: (468, 3)
                         landmarks_adjusted[:, 0] -= x  # x
                         landmarks_adjusted[:, 1] -= y  # y
-
+                        
+                        landmarks_normal = landmarks_adjusted / np.array([w, h])
+                        
                         st_enc = time.perf_counter()
                         face_image_for_encryption = rgb_frame[y:y+h, x:x+w]
 
@@ -307,6 +312,12 @@ if __name__ == "__main__":
                             "frame": frame_count,
                             "landmarks": np.array(landmarks_adjusted).tolist(),
                         }
+                        
+                        data_land_normal = {
+                            "frame": frame_count,
+                            "landmarks": landmarks_normal.tolist(),
+                        }
+                        
                         # json_data = json.dumps(data).encode('utf-8')
                         # encrypted = encrypt_data_aes128(json_data, aes_key)
                         
@@ -316,9 +327,11 @@ if __name__ == "__main__":
 
                         if face_id not in landmarks_data:
                             landmarks_data[face_id] = []
+                            landmarks_data_normal[face_id] = []
 
                         face_metadata[face_id].append(data)
                         landmarks_data[face_id].append(data_land)
+                        landmarks_data_normal[face_id].append(data_land_normal)
                         en_enc = time.perf_counter()
                         enc_times.append((en_enc - st_enc) * 1000)
                         
@@ -444,6 +457,10 @@ if __name__ == "__main__":
         # Save if needed
         st = time.perf_counter()
 
+        if config.SAVE_OUTPUT:
+            # Landmark storage for Tier 2 testing (development)
+            utils.convert_json_to_structure(config.LANDMARKS_PATH, landmarks_data_normal, config.INPUT_VIDEO_PATH)
+        
         # Landmarks
         with open("./output/landmarks.msgpack", "wb") as f:
             f.write(zlib.compress(msgpack.packb(landmarks_data)))

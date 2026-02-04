@@ -120,6 +120,9 @@ Warp a video with a synthetic face and refine it using MobileFaceSwap.
 
 **Prerequisites:**
 - Ensure `MobileFaceSwap/` (with `video_test.py` and checkpoints) is inside the `Synthetic Replacement` folder.
+   The checkpoints can be downloaded from the official **MobileFaceSwap** repository:  
+  [Download checkpoints (Google Drive)](https://drive.google.com/file/d/1ZIzGLDB15GRAZAbkfNR0hNWdgQpxeA_r/view?usp=sharing)  
+  (from the `MobileFaceSwap` directory on GitHub: https://github.com/Seanseattle/MobileFaceSwap)
 - Ensure `synthetic_faces/` and `synthetic_landmarks/` are populated.
 
 **Run Command:**
@@ -323,4 +326,5 @@ python transmit_keys_to_phone.py
 The Android application implementation can be found at this drive link: https://drive.google.com/drive/u/4/folders/1MIjSEbBOurB1UHyRVYXc_2DuNivU9QtL
 
 ---
+
 

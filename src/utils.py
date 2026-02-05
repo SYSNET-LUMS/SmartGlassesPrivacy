@@ -27,9 +27,10 @@ REFERENCE_FIVE_POINTS = np.array([
     [62.72990036,  92.20410156]
 ], dtype=np.float32)
 
-def convert_json_to_structure(root_dir, data, video_name):
+def convert_json_to_structure(root_dir, data, video_path):
     for face_id, frames in data.items():
         # 2. Create the face directory: face_{id}
+        video_name = os.path.splitext(os.path.basename(video_path))[0]
         face_folder = os.path.join(root_dir, video_name, f"face_{face_id}")
         os.makedirs(face_folder, exist_ok=True)
         
@@ -44,8 +45,8 @@ def convert_json_to_structure(root_dir, data, video_name):
             with open(file_path, "w") as f:
                 for point in landmarks:
                     # Each point is a list like [x, y]
-                    if len(point) == 2:
-                        f.write(f"{point[0]},{point[1]}\n")
+                    # if len(point) == 2:
+                    f.write(f"{point[0]},{point[1]}\n")
 
 def merge_audio_with_video(video_path, audio_source_path, output_path, video_bitrate="1021k", audio_bitrate="101k"):
     command = [

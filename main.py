@@ -292,7 +292,7 @@ if __name__ == "__main__":
                         landmarks_adjusted[:, 0] -= x  # x
                         landmarks_adjusted[:, 1] -= y  # y
                         
-                        landmarks_normal = landmarks_adjusted / np.array([w, h])
+                        # landmarks_normal = landmarks_adjusted / np.array([w, h])
                         
                         st_enc = time.perf_counter()
                         face_image_for_encryption = rgb_frame[y:y+h, x:x+w]
@@ -315,7 +315,7 @@ if __name__ == "__main__":
                         
                         data_land_normal = {
                             "frame": frame_count,
-                            "landmarks": landmarks_normal.tolist(),
+                            "landmarks": landmarks.tolist(),
                         }
                         
                         # json_data = json.dumps(data).encode('utf-8')
@@ -337,8 +337,8 @@ if __name__ == "__main__":
                         
                     if config.BLUR_ENABLED:
                         start_blur_time = time.perf_counter()
-                        output_frame = bf.apply_blur_new(rgb_frame, hull, x, y, w, h)
-                        # output_frame = bf.apply_gaussian_blur(rgb_frame, landmarks_scaled)
+                        # output_frame = bf.apply_blur_new(rgb_frame, hull, x, y, w, h)
+                        output_frame = bf.apply_gaussian_blur(rgb_frame, landmarks_scaled)
                         end_blur_time = time.perf_counter()
                         total_blur_times.append((end_blur_time - start_blur_time) * 1000)
                         blur_count += 1
@@ -459,7 +459,7 @@ if __name__ == "__main__":
 
         if config.SAVE_OUTPUT:
             # Landmark storage for Tier 2 testing (development)
-            utils.convert_json_to_structure(config.LANDMARKS_PATH, landmarks_data_normal, config.INPUT_VIDEO_PATH)
+            utils.convert_json_to_structure(config.LANDMARKS_PATH, landmarks_data_normal, config.OUTPUT_VIDEO_PATH)
         
         # Landmarks
         with open("./output/landmarks.msgpack", "wb") as f:

@@ -16,3 +16,4 @@ matplotlib==3.10.8
 seaborn==0.13.2
 onnxruntime==1.23.2
 paddlepaddle==3.1.1
+insightface==0.2.1

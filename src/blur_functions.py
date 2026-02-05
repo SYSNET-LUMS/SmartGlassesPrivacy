@@ -55,7 +55,7 @@ import numpy as np
 #     k1d = cv2.getGaussianKernel(ksize, sigma)
 #     return k1d @ k1d.T  # outer product to get 2D kernel
 
-def apply_gaussian_blur(frame, landmarks, ksize=13, sigma=13, scale = 0.1):
+def apply_gaussian_blur(frame, landmarks, ksize=7, sigma=7, scale = 0.1):
     """Applies Gaussian blur to the face region using convex hull."""
     frame_height, frame_width, _ = frame.shape
     # landmarks = np.array(landmarks, dtype=np.int32)

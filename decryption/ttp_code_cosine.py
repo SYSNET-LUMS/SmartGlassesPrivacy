@@ -184,7 +184,7 @@ for fname in os.listdir(DB_PATH):
     
     aligned = utils.align_face(face_crop, landmarks)
     
-    Image.fromarray(aligned).show()
+    # Image.fromarray(aligned).show()
     pil_img = Image.fromarray(aligned)
     input_tensor = transform(pil_img).unsqueeze(0).to(device)
 

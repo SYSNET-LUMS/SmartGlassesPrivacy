@@ -53,7 +53,7 @@ from src.backbones import get_model
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 class Config:
-    INPUT_VIDEO_PATH = "./input/test.mov"
+    INPUT_VIDEO_PATH = "./input/10_far.mov"
     # INPUT_VIDEO_PATH = 0
     OUTPUT_VIDEO_PATH = "./output/blurred.mp4"
     SAVE_OUTPUT = True

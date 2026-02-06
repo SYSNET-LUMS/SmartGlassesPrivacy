@@ -53,6 +53,12 @@ The dataset includes:
 ---
 
 ## ⚙️ Setup & Installation
+The repository has been thoroughly tested on Windows 11 Pro with Python 3.12.1 and 3.12.3. Please ensure your system has installed both the gcc and g++ compilers. You can check this by executing the following commands.
+
+```bash
+gcc --version
+g++ --version
+```
 
 ### 1. Clone & Install
 ```bash
@@ -93,6 +99,14 @@ Run the main pipeline to generate the blurred video, encrypted metadata, face em
 python main.py
 ```
 
+**Troubleshooting VideoWriter:** If the blurred video doesn't save, modify the codec in `src/utils:136`:
+```python
+fourcc = cv2.VideoWriter_fourcc(*'avc1')
+```
+
+Try alternatives like `*'mp4v'`, `*'XVID'`, or `*'MJPG'`. Note: XVID/MJPG require `.avi` extension.
+
+
 **Note:** `main.py` uses a sequential demo approach for easy prototyping. For the actual concurrency testing described in the paper (using the 3-queue model), please refer to `encryption/performance_eval_rpi.py`.
 
 ### 2. Restoration (Decryption)
@@ -119,11 +133,8 @@ python restore.py
 Warp a video with a synthetic face and refine it using MobileFaceSwap.
 
 **Prerequisites:**
-- Ensure `MobileFaceSwap/` (with `video_test.py` and checkpoints) is inside the `Synthetic Replacement` folder.
-   The checkpoints can be downloaded from the official **MobileFaceSwap** repository:  
-  [Download checkpoints (Google Drive)](https://drive.google.com/file/d/1ZIzGLDB15GRAZAbkfNR0hNWdgQpxeA_r/view?usp=sharing)  
-  (from the `MobileFaceSwap` directory on GitHub: https://github.com/Seanseattle/MobileFaceSwap)
-- Ensure `synthetic_faces/` and `synthetic_landmarks/` are populated.
+- Ensure the MobileFaceSwap checkpoints are correctly placed inside the `Synthetic Replacement/MobileFaceSwap/` directory.
+   The checkpoints can be downloaded from the official **MobileFaceSwap** repository through their provided drive link: https://github.com/Seanseattle/MobileFaceSwap
 
 **Run Command:**
 ```bash

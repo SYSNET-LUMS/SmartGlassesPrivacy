@@ -109,7 +109,25 @@ Try alternatives like `*'mp4v'`, `*'XVID'`, or `*'MJPG'`. Note: XVID/MJPG requir
 
 **Note:** `main.py` uses a sequential demo approach for easy prototyping. For the actual concurrency testing described in the paper (using the 3-queue model), please refer to `encryption/performance_eval_rpi.py`.
 
-### 2. Restoration (Decryption)
+### 2. Synthetic Replacement
+Warp a video with a synthetic face and refine it using MobileFaceSwap.
+
+**Prerequisites:**
+- Ensure the MobileFaceSwap checkpoints are correctly placed inside the `Synthetic Replacement/MobileFaceSwap/` directory.
+   The checkpoints can be downloaded from the official **MobileFaceSwap** repository through their provided drive link: https://github.com/Seanseattle/MobileFaceSwap
+
+**Run Command:**
+```bash
+cd "Synthetic Replacement"
+python main.py \
+  --video "/absolute/path/to/your_video.mp4" \
+  --landmarks_root "/absolute/path/to/video_landmarks" \
+  --after_swap
+```
+
+**Output:** The script generates the warped video and the final swapped result in the repo directory.
+
+### 3. Restoration (Decryption)
 To demo the consent-based restoration, navigate to the decryption folder.
 
 #### Step A: Simulate TTP Matching
@@ -128,24 +146,6 @@ python restore.py
 ```
 
 **Optional utility:** Run `decrypt_face_blobs_per_id.py` to inspect decrypted face regions as standalone JPEGs.
-
-### 3. Synthetic Replacement
-Warp a video with a synthetic face and refine it using MobileFaceSwap.
-
-**Prerequisites:**
-- Ensure the MobileFaceSwap checkpoints are correctly placed inside the `Synthetic Replacement/MobileFaceSwap/` directory.
-   The checkpoints can be downloaded from the official **MobileFaceSwap** repository through their provided drive link: https://github.com/Seanseattle/MobileFaceSwap
-
-**Run Command:**
-```bash
-cd "Synthetic Replacement"
-python main.py \
-  --video "/absolute/path/to/your_video.mp4" \
-  --landmarks_root "/absolute/path/to/video_landmarks" \
-  --after_swap
-```
-
-**Output:** The script generates the warped video and the final swapped result in the repo directory.
 
 ---
 

@@ -1,6 +1,6 @@
 # 🕶️ Consent-Driven Privacy for Smart Glasses
 
-This repository contains the reference implementation of **Consent-Driven Privacy for Smart Glasses**, a privacy-by-default, three-tier system designed to protect bystanders while preserving utility for consenting parties.
+This repository contains the reference implementation and evaluation of **SITARA**, a privacy-by-default, three-tier system designed to protect bystanders while preserving utility for consenting parties.
 
 The system enforces **on-device blurring at capture**, storing only encrypted face packets and embeddings so raw facial pixels are never exposed. It supports landmark-driven **synthetic face replacements** on a companion phone for immediate wearer utility. When a bystander explicitly consents, the system uses a cryptographic, consent-mediated split-key protocol with a Trusted Third Party (TTP) to restore the original face.
 
@@ -15,6 +15,7 @@ The prototype runs in real-time on **Raspberry Pi 4** hardware, and this reposit
 * **🎭 Usability-Preserving Synthetic Replacement:** Landmark-driven, mobile-optimized face replacement to maintain wearer experience without compromising privacy.
 * **⚙️ Working Prototype:** Full implementation on Raspberry Pi 4 + companion Android app.
 * **📂 Dataset:** 16,500 annotated frames collected with Ray-Ban Meta hardware (released with this repo).
+* **👥 User Study:** A comprehensive qualitative evaluation involving 9 camera-glass wearers and 9 bystanders.
 
 ---
 
@@ -338,4 +339,74 @@ The Android application implementation can be found at this drive link: https://
 
 ---
 
+# Qualitative Evaluation
 
+We conducted a qualitative study (N=18) on wearers' and bystanders' perceptions of opt-in, privacy-by-default approaches for camera glasses. Participants interacted with the protocol interface and discussed their perceptions in semi-structured interviews. Our findings show that bystanders viewed the opt-in protocol as essential and advocated for even stronger anonymization. Wearers appreciated the protocol's safeguards but found it visually limiting, expressing desire for a context-dependent version that can be enabled in relevant scenarios.
+
+## Methodology
+
+We recruit participants from our local university group. The following figure shows an overview of our recruitment and assignment workflow including number of participants at each stage.
+
+<p align="center">
+<img src="imgs/recruitment.png" alt="Recruitment process" width="80%">
+</p>
+
+The study employed a two-phase design with two participant groups: wearers and bystanders. Wearers were provided with the Meta Ray-Ban Stories glasses during a one-week onboarding period. Bystander participants proceeded directly to the in-person interview. Participants recorded short videos using the glasses, with footage processed through our protocol to generate blurred and AI-replaced versions. The following figure shows a screenshot of the protocol interface used by the participants.
+
+<p align="center">
+<img src="imgs/demo_app_figure.png" alt="protocol interface" width="80%">
+</p>
+
+## Results and Discussion
+
+We structure our exploration to examine the following research questions:
+- **RQ1** examines bystander privacy needs in opt-in approaches
+- **RQ2** investigates wearer usability requirements
+
+Our findings reveal that consent mechanisms introduce complex social dynamics, obfuscation effectiveness depends heavily on context, and both stakeholder groups balance competing priorities: bystanders emphasize privacy protection while wearers prioritize usability and recording capability.
+
+This divide goes beyond simple preference differences and represents distinct frameworks for understanding privacy in the age of ubiquitous recording.
+
+### Privacy as a Non-Negotiable Right
+
+Bystanders approached the protocol from a rights-based perspective, viewing its protections as essential safeguards rather than optional features.
+
+### Privacy as a Contextual Tool
+
+Wearers evaluated the protocol through a social and practical lens. While they acknowledged the protocol's value in providing social license to record and reducing ethical burden.
+
+These opposing frameworks suggest that successful privacy-mediating technologies must somehow reconcile rights-based and pragmatic perspectives without simply defaulting to restrictive approaches, which would limit adoption, or permissive ones, which fail to address legitimate privacy concerns.
+
+### Design Directives for Opt-in Privacy
+
+**Context Dependent Application:** Wearers seek contextual flexibility while bystanders require mandatory protection. Future systems should explore context-dependent ways of enabling or disabling the protocol i.e., the protocol could be relaxed in familiar private locations (e.g., a wearer's home) but mandatory in public spaces.
+
+**Mitigating Consent Fatigue:** Meaningful consent inherently introduces fatigue for both wearers and bystanders. Future systems should allow bystanders to specify contextual constraints and preference settings.
+
+**Mitigating TTP-Associated Risks:** Bystanders require context to make informed privacy decisions, yet excessive metadata increases third-party exposure. Progressive disclosure balances these needs by providing minimal initial info while allowing bystanders to request more context as required. Future work can also explore decentralized architectures.
+
+**Incentives for Manufacturers:** Current camera glass manufacturers focus primarily on wearer usability while neglecting these social barriers that limit adoption. Our work points to an important value proposition for manufacturers: while the protocol introduces some operational overhead, it legitimizes recording practices and reduces the social stigma attached to camera glasses.
+
+## Citation
+This work has been published at the **IEEE International Conference on Pervasive Computing and Communications (PerCom 2026)** and the **ACM CHI Conference on Human Factors in Computing Systems (CHI 2026)**.
+
+If you find our code, dataset or qualitative exploration of opt-in privacy useful, please use the following citations:
+
+```
+@inproceedings{khawaja2026now,
+  title={{Now You See Me, Now You Don’t: Consent-Driven Privacy for Smart Glasses}},
+  author={Khawaja, Yahya and Nabeel, Eman and Humayun, Sana and Javed, Eruj and Krombholz, Katharina and Alizai, Hamad and Bhatti, Naveed},
+  booktitle={Proceedings of the IEEE International Conference on Pervasive Computing and Communications (PerCom)},
+  year={2026},
+  publisher = {IEEE},
+}
+```
+```
+@inproceedings{khawaja2026see,
+  title={{See Me If You Can: A Multi-Layer Protocol for Bystander Privacy with Consent-Based Restoration}},
+  author={Khawaja, Yahya and Rehman, Shirin and Ponticello, Alexander and Bhardwaj, Divyanshu and Krombholz, Katharina and Alizai, Hamad and Bhatti, Naveed},
+  booktitle={Proceedings of the Conference on Human Factors in Computing Systems (CHI)},
+  year={2026},
+  publisher = {ACM}
+}
+```

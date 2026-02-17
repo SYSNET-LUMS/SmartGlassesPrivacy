@@ -10,12 +10,12 @@ The prototype runs in real-time on **Raspberry Pi 4** hardware, and this reposit
 
 ##  Highlights & Contributions
 
-* ** Privacy at Capture:** Mandatory on-device blurring with per-face encrypted packets.
-* ** Reversible & Consented Restoration:** A TTP-mediated split-key protocol ensures restorations only occur with bystander signatures.
-* ** Usability-Preserving Synthetic Replacement:** Landmark-driven, mobile-optimized face replacement to maintain wearer experience without compromising privacy.
-* ** Working Prototype:** Full implementation on Raspberry Pi 4 + companion Android app.
-* ** Dataset:** 16,500 annotated frames collected with Ray-Ban Meta hardware (released with this repo).
-* ** User Study:** A comprehensive qualitative evaluation involving 9 camera-glass wearers and 9 bystanders.
+* **Privacy at Capture:** Mandatory on-device blurring with per-face encrypted packets.
+* **Reversible & Consented Restoration:** A TTP-mediated split-key protocol ensures restorations only occur with bystander signatures.
+* **Usability-Preserving Synthetic Replacement:** Landmark-driven, mobile-optimized face replacement to maintain wearer experience without compromising privacy.
+* **Working Prototype:** Full implementation on Raspberry Pi 4 + companion Android app.
+* **Dataset:** 16,500 annotated frames collected with Ray-Ban Meta hardware (released with this repo).
+* **User Study:** A comprehensive qualitative evaluation involving 9 camera-glass wearers and 9 bystanders.
 
 ---
 
@@ -411,3 +411,4 @@ If you find our code, dataset, or qualitative exploration of opt-in privacy usef
 }
 
 ```
+

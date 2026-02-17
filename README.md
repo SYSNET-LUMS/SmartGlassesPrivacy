@@ -8,18 +8,18 @@ The prototype runs in real-time on **Raspberry Pi 4** hardware, and this reposit
 
 ---
 
-## 🌟 Highlights & Contributions
+##  Highlights & Contributions
 
-* **🔒 Privacy at Capture:** Mandatory on-device blurring with per-face encrypted packets.
-* **🔑 Reversible & Consented Restoration:** A TTP-mediated split-key protocol ensures restorations only occur with bystander signatures.
-* **🎭 Usability-Preserving Synthetic Replacement:** Landmark-driven, mobile-optimized face replacement to maintain wearer experience without compromising privacy.
-* **⚙️ Working Prototype:** Full implementation on Raspberry Pi 4 + companion Android app.
-* **📂 Dataset:** 16,500 annotated frames collected with Ray-Ban Meta hardware (released with this repo).
-* **👥 User Study:** A comprehensive qualitative evaluation involving 9 camera-glass wearers and 9 bystanders.
+* ** Privacy at Capture:** Mandatory on-device blurring with per-face encrypted packets.
+* ** Reversible & Consented Restoration:** A TTP-mediated split-key protocol ensures restorations only occur with bystander signatures.
+* ** Usability-Preserving Synthetic Replacement:** Landmark-driven, mobile-optimized face replacement to maintain wearer experience without compromising privacy.
+* ** Working Prototype:** Full implementation on Raspberry Pi 4 + companion Android app.
+* ** Dataset:** 16,500 annotated frames collected with Ray-Ban Meta hardware (released with this repo).
+* ** User Study:** A comprehensive qualitative evaluation involving 9 camera-glass wearers and 9 bystanders.
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 The repository code and assets are mapped to the paper’s three-tier architecture:
 
@@ -91,7 +91,7 @@ class Config:
 
 ---
 
-## 🚀 Usage
+##  Usage
 
 ### 1. On-Device Capture (Blurring & Encryption)
 Run the main pipeline to generate the blurred video, encrypted metadata, face embeddings, and landmark files:
@@ -152,7 +152,7 @@ python restore.py
 
 ## 📊 Evaluation & Results
 
-### 🧪 Accuracy Evaluation (SITARA_eval.ipynb)
+###  Accuracy Evaluation (SITARA_eval.ipynb)
 We provide a Jupyter Notebook to reproduce our COCO-style metrics (AP/AR):
 
 - Ensure Ground Truth JSONs are in `Annotated JSONs/`
@@ -191,14 +191,14 @@ Values in **bold** indicate the best performance in the comparison.
 
 ### Synthetic Face Replacement
 
-The evaluation.py file inside the Synthetic Replacement folder compares our pipeline with the baseline (MFS) across 5 different metrics. Modify the folder path containing original videos, MFS videos, and videos using our pipeline.
+The evaluation.py file inside the Synthetic Replacement folder compares our pipeline with the baseline (MFS) across 5 different metrics. Modify the folder path to include the original videos, MFS videos, and videos processed by our pipeline.
 
 #### Category Breakdown
-The figure below shows a category wise breakdown of synthetic face replacement metrics.
+The figure below shows a breakdown of synthetic face replacement metrics by category.
 
 ![synthetic results](https://github.com/anonresearcher-25/NowYouSeeMe/blob/main/imgs/latest_new.png)
 
-The following table shows a summarized version of results.
+The following table shows a summarized version of the results.
 
 | Metric | Baseline | Our Pipeline (Sitara) | Theoretical Range |
 |--------|----------|----------------------|-------------------|
@@ -259,11 +259,11 @@ The figure below shows Power Consumption traces for each category on RPi 4 B:
 
 ---
 
-## 🔬 System Performance Deep Dive
+##  System Performance Deep Dive
 
 ### Tier 1: On-Device Face Blurring and Encryption
 
-On-device face blurring and encryption processes each frame through: **Face Detector → Landmark Detector → Blurring + Encryption**. The largest computational cost is running full-frame face detection.
+On-device face blurring and encryption processes each frame through: **Face Detector → Landmark Detector → Blurring + Encryption**. The highest computational cost is running full-frame face detection.
 
 #### Detector Inference Cost
 
@@ -341,11 +341,11 @@ The Android application implementation can be found at this drive link: https://
 
 # Qualitative Evaluation
 
-We conducted a qualitative study (N=18) on wearers' and bystanders' perceptions of opt-in, privacy-by-default approaches for camera glasses. Participants interacted with the protocol interface and discussed their perceptions in semi-structured interviews. Our findings show that bystanders viewed the opt-in protocol as essential and advocated for even stronger anonymization. Wearers appreciated the protocol's safeguards but found it visually limiting, expressing desire for a context-dependent version that can be enabled in relevant scenarios.
+We conducted a qualitative study (N=18) on wearers' and bystanders' perceptions of opt-in, privacy-by-default approaches for camera glasses. Participants interacted with the protocol interface and discussed their perceptions in semi-structured interviews. Our findings show that bystanders viewed the opt-in protocol as essential and advocated for even stronger anonymization. Wearers appreciated the protocol's safeguards but found it visually limiting, expressing a desire for a context-dependent version that can be enabled in relevant scenarios.
 
 ## Methodology
 
-We recruit participants from our local university group. The following figure shows an overview of our recruitment and assignment workflow including number of participants at each stage.
+We recruit participants from our local university group. The following figure shows an overview of our recruitment and assignment workflow, including the number of participants at each stage.
 
 <p align="center">
 <img src="imgs/recruitment.png" alt="Recruitment process" width="80%">
@@ -379,7 +379,7 @@ These opposing frameworks suggest that successful privacy-mediating technologies
 
 ### Design Directives for Opt-in Privacy
 
-**Context Dependent Application:** Wearers seek contextual flexibility while bystanders require mandatory protection. Future systems should explore context-dependent ways of enabling or disabling the protocol i.e., the protocol could be relaxed in familiar private locations (e.g., a wearer's home) but mandatory in public spaces.
+**Context Dependent Application:** Wearers seek contextual flexibility while bystanders require mandatory protection. Future systems should explore context-dependent ways of enabling or disabling the protocol, i.e., the protocol could be relaxed in familiar private locations (e.g., a wearer's home) but mandatory in public spaces.
 
 **Mitigating Consent Fatigue:** Meaningful consent inherently introduces fatigue for both wearers and bystanders. Future systems should allow bystanders to specify contextual constraints and preference settings.
 
@@ -390,7 +390,7 @@ These opposing frameworks suggest that successful privacy-mediating technologies
 ## Citation
 This work has been published at the **IEEE International Conference on Pervasive Computing and Communications (PerCom 2026)** and the **ACM CHI Conference on Human Factors in Computing Systems (CHI 2026)**.
 
-If you find our code, dataset or qualitative exploration of opt-in privacy useful, please use the following citations:
+If you find our code, dataset, or qualitative exploration of opt-in privacy useful, please use the following citations:
 
 ```
 @inproceedings{khawaja2026now,
@@ -409,4 +409,5 @@ If you find our code, dataset or qualitative exploration of opt-in privacy usefu
   year={2026},
   publisher = {ACM}
 }
+
 ```
